@@ -81,7 +81,7 @@ The project requires the following Python packages:
 jupyter notebook
 ```
 
-2. Open `visualize_physionet_eeg.ipynb`
+2. Open [visualize.ipynb](visualize.ipynb)
 
 3. Run all cells sequentially (Cell → Run All)
 
