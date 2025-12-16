@@ -209,11 +209,6 @@
     "    # For larger files, consider loading only specific time segments\n",
     "    raw.load_data()\n",
     "    print(\"\\nData loaded into memory.\")\n",
-    "    \n",
-    "    # Set standard montage for electrode positions (needed for topographic plots)\n",
-    "    montage = mne.channels.make_standard_montage('standard_1020')\n",
-    "    raw.set_montage(montage, on_missing='ignore')\n",
-    "    print(\"Electrode montage set successfully.\")\n",
     "except Exception as e:\n",
     "    print(f\"Error loading EEG data: {e}\")\n",
     "    raise"
@@ -730,17 +725,12 @@
     "# Load the second run if available\n",
     "if file_path2 and file_path2.exists():\n",
     "    raw2 = mne.io.read_raw_edf(file_path2, preload=True, verbose=False)\n",
-    "    print(f\"\\nLoaded {filename2}:\")\n",
+    "    print(f\"\\\\nLoaded {filename2}:\")\n",
     "    print(f\"  Duration: {raw2.times[-1]:.2f} seconds\")\n",
     "    print(f\"  Channels: {len(raw2.ch_names)}\")\n",
-    "    \n",
-    "    # Set standard montage for electrode positions (needed for topographic plots)\n",
-    "    montage = mne.channels.make_standard_montage('standard_1020')\n",
-    "    raw2.set_montage(montage, on_missing='ignore')\n",
-    "    print(\"Electrode montage set successfully for raw2.\")\n",
     "else:\n",
     "    raw2 = None\n",
-    "    print(\"\\nSecond condition not available for comparison.\")"
+    "    print(\"\\\\nSecond condition not available for comparison.\")"
    ]
   },
   {
