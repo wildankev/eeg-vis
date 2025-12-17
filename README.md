@@ -28,9 +28,13 @@ This project uses the **PhysioNet EEG During Mental Arithmetic Tasks Dataset**:
 
 ## Features
 
-The notebook (`visualize.ipynb`) includes:
+The project includes two notebooks:
+- `visualize.ipynb`: The original visualization notebook.
+- `visualize_revised.ipynb`: **Recommended**. A revised version with enhanced features including PLI connectivity analysis and PSD topoplots, using temporary storage to ensure no files are saved locally.
 
-1. **Automated Data Download**: Downloads EDF files directly from PhysioNet (data kept in notebook output only)
+Key features in `visualize_revised.ipynb`:
+
+1. **Automated Data Download**: Downloads EDF files directly from PhysioNet (stored in temporary directory)
 2. **Time-Series Visualization**: Multi-channel plots showing EEG signals over time
 3. **Single Channel Analysis**: Detailed view of individual channels with statistics
 4. **Power Spectral Density (PSD)**: Frequency domain analysis focusing on beta band (13-30 Hz) associated with active thinking
@@ -38,8 +42,7 @@ The notebook (`visualize.ipynb`) includes:
    - Baseline condition topoplot
    - Mental arithmetic task condition topoplot
    - Difference map (task vs. baseline)
-   - Proper electrode positioning with interpolated scalp maps
-6. **Phase Lag Index (PLI) Connectivity Analysis**: Functional connectivity between brain regions (if implemented)
+6. **Phase Lag Index (PLI) Connectivity Analysis**: Functional connectivity heatmaps between brain regions (visualizing synchronization)
 7. **Statistical Analysis**: Summary statistics for data quality assessment
 
 ## Installation
