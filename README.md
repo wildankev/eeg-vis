@@ -44,13 +44,18 @@ The notebook (`visualize.ipynb`) includes:
 
 ## Installation
 
-### Prerequisites
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/wildankev/eeg-vis.git
+   cd eeg-vis
+   ```
+
+2. **Install requirements**:
 
 - Python 3.8 or higher
 - pip package manager
 - Jupyter Notebook or JupyterLab
 
-### Setup
 
 1. Navigate to the project directory:
 ```bash
