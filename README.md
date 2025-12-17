@@ -90,7 +90,7 @@ This analysis compares beta activity between:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/wildankev/eegmat-visualization.git
-   cd eeg-vis
+   cd eegmat-visualization
    ```
 
 2. **Install required dependencies**:
