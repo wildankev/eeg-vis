@@ -1,6 +1,6 @@
 # EEG Visualization Project
 
-A comprehensive Jupyter notebook for downloading and visualizing EEG (Electroencephalography) data from the PhysioNet EEG Motor Movement/Imagery Dataset.
+A comprehensive Jupyter notebook for downloading and visualizing EEG (Electroencephalography) data from the PhysioNet EEG During Mental Arithmetic Tasks Dataset.
 
 ## Overview
 
@@ -9,37 +9,38 @@ This project provides a complete pipeline for:
 - Loading and processing EDF files
 - Visualizing EEG signals in multiple formats
 - Analyzing frequency content and spatial distribution
+- Creating topographic heatmaps of brain activity
+
+**Note**: All data downloads and visualizations are displayed in the notebook output only. No files are saved locally to conserve disk space.
 
 ## Dataset
 
-This project uses the **PhysioNet EEG Motor Movement/Imagery Database**:
-- **URL**: https://physionet.org/content/eegmmidb/1.0.0/
-- **Subjects**: 109 volunteers
-- **Channels**: 64 EEG channels
-- **Sampling Rate**: 160 Hz
-- **Tasks**: Baseline, motor execution, and motor imagery tasks
+This project uses the **PhysioNet EEG During Mental Arithmetic Tasks Dataset**:
+- **URL**: https://physionet.org/content/eegmat/1.0.0/
+- **Subjects**: 36 volunteers
+- **Channels**: 23 EEG channels (10/20 system)
+- **Sampling Rate**: ~500 Hz (varies by subject)
+- **Tasks**: 
+  - **Condition 1**: Baseline/resting state EEG (60 seconds)
+  - **Condition 2**: Mental arithmetic task - serial subtraction of 2-digit from 4-digit numbers (60 seconds)
 - **Format**: EDF (European Data Format)
+- **Frequency Band**: This analysis focuses on **Beta band (13-30 Hz)**, associated with active thinking and concentration
 
 ## Features
 
 The notebook (`visualize.ipynb`) includes:
 
-1. **Automated Data Download**: Downloads EDF files directly from PhysioNet
+1. **Automated Data Download**: Downloads EDF files directly from PhysioNet (data kept in notebook output only)
 2. **Time-Series Visualization**: Multi-channel plots showing EEG signals over time
 3. **Single Channel Analysis**: Detailed view of individual channels with statistics
-4. **Power Spectral Density (PSD)**: Frequency domain analysis showing brain wave bands
-5. **Topographic Mapping**: Spatial distribution of EEG activity across the scalp
-6. **Phase Lag Index (PLI) Connectivity Heatmaps**: 
-   - Visualize functional connectivity between brain regions
-   - Multi-condition comparison with difference maps
-   - Uses diverging colormaps for highlighting connectivity changes
-7. **Enhanced PSD Topographic Maps**:
-   - Spatial distribution across multiple frequency bands (delta, theta, alpha, beta)
-   - Multi-condition comparison for task-related analysis
-   - Difference maps showing power changes between conditions
-   - Smooth interpolation with proper electrode positioning
-8. **Interactive Browser**: MNE-based interactive visualization for detailed exploration
-9. **Statistical Analysis**: Summary statistics for data quality assessment
+4. **Power Spectral Density (PSD)**: Frequency domain analysis focusing on beta band (13-30 Hz) associated with active thinking
+5. **PSD Topoplot Heatmaps**: Spatial distribution of beta band power across the scalp
+   - Baseline condition topoplot
+   - Mental arithmetic task condition topoplot
+   - Difference map (task vs. baseline)
+   - Proper electrode positioning with interpolated scalp maps
+6. **Phase Lag Index (PLI) Connectivity Analysis**: Functional connectivity between brain regions (if implemented)
+7. **Statistical Analysis**: Summary statistics for data quality assessment
 
 ## Installation
 
@@ -51,9 +52,8 @@ The notebook (`visualize.ipynb`) includes:
 
 ### Setup
 
-1. Clone this repository:
+1. Navigate to the project directory:
 ```bash
-git clone https://github.com/wildankev/eeg-vis.git
 cd eeg-vis
 ```
 
@@ -68,11 +68,9 @@ The project requires the following Python packages:
 - `numpy` (≥1.21.0) - Numerical computing
 - `scipy` (≥1.8.0) - Scientific computing
 - `matplotlib` (≥3.4.0) - Plotting and visualization
-- `seaborn` (≥0.11.0) - Statistical data visualization
 - `mne` (≥1.0.0) - EEG/MEG data processing
 - `requests` (≥2.26.0) - HTTP library for downloading data
 - `jupyter` (≥1.0.0) - Jupyter notebook environment
-- `ipykernel` (≥6.0.0) - IPython kernel for Jupyter
 
 ## Usage
 
@@ -86,36 +84,32 @@ jupyter notebook
 3. Run all cells sequentially (Cell → Run All)
 
 The notebook will:
-- Create a `physionet_eeg_data/` directory
-- Download a sample EEG file (~80 KB)
+- Download sample EEG files from PhysioNet
 - Load and process the data
-- Generate multiple visualizations
+- Generate multiple visualizations in the notebook output
+- Display all results inline (no files saved to disk)
 
 ### Customization
 
 You can modify the notebook to:
-- **Change subject/run**: Edit the `subject` and `run` variables in the download cell
+- **Change subject**: Edit the `SUBJECTS` list in the configuration cell
 - **Adjust visualization parameters**: Modify duration, channels, time windows
-- **Apply filters**: Add bandpass or notch filters to remove artifacts
-- **Compare tasks**: Load multiple runs to compare different motor tasks
+- **Apply filters**: Adjust the beta band frequency range (default: 13-30 Hz)
 
 ## Output
 
-The notebook generates several visualization types:
+The notebook generates several visualization types displayed in the output cells:
 
-1. **Multi-channel time-series plots**: Shows 7 channels over 10 seconds
-2. **Detailed single-channel view**: 5-second detailed view with statistics
-3. **Power spectral density plots**: Frequency analysis with marked brain wave bands
-4. **Basic topographic maps**: Spatial distribution of EEG activity
-5. **PLI connectivity heatmaps**: Phase lag index matrices showing functional connectivity
-   - Single condition heatmaps with sequential colormaps
-   - Multi-condition comparison panels
-   - Difference maps with diverging colormaps
-6. **Enhanced PSD topographic maps**: Publication-quality brain maps
-   - Multiple frequency bands visualization
-   - Condition comparison with difference maps
-   - Proper electrode positioning and interpolation
-7. **Interactive browser**: Scrollable view of all channels
+1. **Time-series plots**: Multi-channel EEG signals over time
+2. **Detailed channel views**: Individual channel analysis with statistics
+3. **Power spectral density plots**: Frequency analysis in beta band (13-30 Hz)
+4. **PSD Topoplot Heatmaps**: Spatial distribution of beta band power
+   - Baseline condition topoplot (resting state)
+   - Mental arithmetic task condition topoplot
+   - Difference map showing brain activity changes
+5. **Statistical summaries**: Data quality assessment metrics
+
+**Note**: All visualizations are displayed as notebook outputs only. No files are saved locally.
 
 ## Troubleshooting
 
@@ -123,16 +117,14 @@ The notebook generates several visualization types:
 
 If you encounter network issues downloading from PhysioNet:
 1. Check your internet connection
-2. Verify the PhysioNet URL is accessible
-3. Try downloading the file manually from the URL shown in the error message
-4. Place the downloaded `.edf` file in the `physionet_eeg_data/` directory
+2. Verify the PhysioNet URL is accessible: https://physionet.org/content/eegmat/1.0.0/
+3. Try running the download cell again
 
 ### Memory Issues
 
-For large files, the notebook uses lazy loading. If you still encounter memory issues:
-- Reduce the `duration` parameter in visualization cells
-- Load only specific channels using the `picks` parameter
-- Consider using a machine with more RAM
+If you encounter memory issues:
+- Reduce the number of subjects in the `SUBJECTS` list
+- Restart the kernel and run cells sequentially
 
 ### Compatibility
 
@@ -161,9 +153,10 @@ This project is open source. The PhysioNet dataset is subject to its own license
 
 ## References
 
-- [PhysioNet EEG Motor Movement/Imagery Database](https://physionet.org/content/eegmmidb/1.0.0/)
+- [PhysioNet EEG During Mental Arithmetic Tasks Dataset](https://physionet.org/content/eegmat/1.0.0/)
 - [MNE-Python Documentation](https://mne.tools/stable/index.html)
 - Goldberger, A., et al. "PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals." Circulation 101.23 (2000): e215-e220.
+- Zyma, I., et al. "Electroencephalograms during Mental Arithmetic Task Performance." Data 4.1 (2019): 14.
 
 ## Acknowledgments
 
